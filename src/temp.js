@@ -14,10 +14,8 @@ class BooksApp extends React.Component {
   }
 
     filterBookList(shelf){
-      let res=[];
-       if(this.state.books!=null){
-         res = this.state.books.filter(x=>(x['shelf']===shelf))}
-      return res;
+       if(this.state.books!=null)
+       return this.state.books.filter(x=>(x['shelf']===shelf));
        
     }
   componentDidMount(){
@@ -28,10 +26,9 @@ class BooksApp extends React.Component {
     })
   }
   render() {
+    console.log('bookapp, this.state'.localeCompar,this.state)
     console.log('booksapp, this.state.books',this.state.books)
-    const currentlyReading = 'currentlyReading'
-    const wantToRead ='wantToRead'
-    const read = 'read'
+    
     return (
       <div className="app">
         {this.state.showSearchPage ? (
@@ -63,13 +60,13 @@ class BooksApp extends React.Component {
             <div className="list-books-content">
               <div>
                 <div className="bookshelf">
-                  <h2 className="bookshelf-title">Currently Reading</h2>
+                <BookList books={this.filterBookList('currentlyReading')} />
+                <div>
+                <h2 className="bookshelf-title">Currently Reading</h2>
                   <div className="bookshelf-books">
                     <ol className="books-grid">
-                    <BookList books={this.filterBookList(currentlyReading)} shelf={currentlyReading} />
                       <li>
                         <div className="book">
-                        
                           <div className="book-top">
                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url("http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api")' }}></div>
                             <div className="book-shelf-changer">
@@ -111,7 +108,6 @@ class BooksApp extends React.Component {
                   <h2 className="bookshelf-title">Want to Read</h2>
                   <div className="bookshelf-books">
                     <ol className="books-grid">
-                    <BookList books={this.filterBookList(wantToRead)} shelf={wantToRead} />
                       <li>
                         <div className="book">
                           <div className="book-top">
@@ -155,7 +151,6 @@ class BooksApp extends React.Component {
                   <h2 className="bookshelf-title">Read</h2>
                   <div className="bookshelf-books">
                     <ol className="books-grid">
-                    <BookList books={this.filterBookList(read)} shelf={read} />
                       <li>
                         <div className="book">
                           <div className="book-top">
@@ -219,10 +214,9 @@ class BooksApp extends React.Component {
               <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
             </div>
           </div>
+          </div>
         )}
       </div>
     )
   }
 }
-
-export default BooksApp
