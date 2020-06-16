@@ -14,17 +14,15 @@ class BookList extends React.Component {
         <h2 className="bookshelf-title">{this.props.shelf}</h2>
         <div className="bookshelf">
         <ol className="books-grid">
-        {this.props.books.map(x=>(
-          <div className="book">
-            <li key={x['id']}>
+        {this.props.books.map(x=>(  
+            <li className ="book" key={x['id']}>
             <div className="book-top">
               <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${x['imageLinks']['smallThumbnail']})` }}></div>
-                <BookStateSelection books={this.props.books} /> 
+                <BookStateSelection book={x} /> 
             </div>
              <div className="book-title">{x['title']}</div>
              <div className="book-authors">{x['authors'].join(', ')}</div>
-            </li>
-          </div>
+            </li>    
         ))}
         </ol> 
         </div>

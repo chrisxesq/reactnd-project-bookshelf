@@ -20,6 +20,8 @@ class BooksApp extends React.Component {
       return res;
        
     }
+
+
   componentDidMount(){
     BooksAPI.getAll().then(books=>{
       this.setState((prevState)=>({
@@ -29,6 +31,7 @@ class BooksApp extends React.Component {
   }
   render() {
     console.log('booksapp, this.state.books',this.state.books)
+    
     return (
       <div className="app">
         {this.state.showSearchPage ? (
