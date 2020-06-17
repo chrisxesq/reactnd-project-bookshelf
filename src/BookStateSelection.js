@@ -23,7 +23,7 @@ dothis =(e) => {
       return(
         <div>
         <div className="book-shelf-changer">
-          <select onChange = {this.dothis}>
+          <select value="move" onChange = {this.dothis}>
             <option value="move" disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
