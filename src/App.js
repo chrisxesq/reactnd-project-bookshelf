@@ -2,6 +2,7 @@ import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import BookList from './BookList'
+import SearchPage from './SearchPage'
 class BooksApp extends React.Component {
   state = {
     /**
@@ -24,8 +25,11 @@ class BooksApp extends React.Component {
     updateBookShelf=(book)=>{
       console.log('thisstate',this.state.books)
       const i = this.state.books.findIndex(bk=>(bk['title']===book['title']));
+      const updateBooks = this.state.books;
+      console.log('updatebooks',updateBooks)
+      updateBooks[i]=book;
       this.setState((prevState)=>({
-        books: prevState.books[i]=book
+        books: updateBooks
       }))
       
       
