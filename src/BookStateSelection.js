@@ -5,14 +5,18 @@ class BookStateSelection extends React.Component {
 
 dothis =(e) => {
     
-    e.preventDefault();
+    const newShelf = e.target.value;
     const book = this.props.book;
-    console.log('bingo!',book)
-    
-}
+    console.log('book title: ',book['title'])
+    console.log('new shelf: ',newShelf)
+    if (newShelf !=='none' && newShelf !==book['shelf']){
+    book['shelf']=newShelf;
+    console.log('updatebook: ',book)
+    this.props.updateBookShelf(book)}
+  }
 
   render(){
-    console.log('bookselect',this.props.book)
+    console.log('bookselect',this.props)
       return(
         <div>
         <div className="book-shelf-changer">

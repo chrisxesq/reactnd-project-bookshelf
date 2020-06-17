@@ -13,7 +13,7 @@ class BooksApp extends React.Component {
     showSearchPage: false
   }
 
-    filterBookList(shelf){
+    filterBookList=(shelf)=>{
       let res=[];
        if(this.state.books!=null){
          res = this.state.books.filter(x=>(x['shelf']===shelf))}
@@ -21,6 +21,16 @@ class BooksApp extends React.Component {
        
     }
 
+    updateBookShelf=(book)=>{
+      console.log('thisstate',this.state.books)
+      const i = this.state.books.findIndex(bk=>(bk['title']===book['title']));
+      this.setState((prevState)=>({
+        books: prevState.books[i]=book
+      }))
+      
+      
+      
+    }
 
   componentDidMount(){
     BooksAPI.getAll().then(books=>{
@@ -62,9 +72,9 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-                <BookList books={this.filterBookList('currentlyReading')} shelf={'Currently Reading'} />
-                <BookList books={this.filterBookList('wantToRead')} shelf={'Want to Read'} />
-                <BookList books={this.filterBookList('read')} shelf={'Read'} />
+                <BookList books={this.filterBookList('currentlyReading')} shelf={'Currently Reading'} updateBookShelf={this.updateBookShelf} />
+                <BookList books={this.filterBookList('wantToRead')} shelf={'Want to Read'} updateBookShelf={this.updateBookShelf} />
+                <BookList books={this.filterBookList('read')} shelf={'Read'} updateBookShelf={this.updateBookShelf} />
               
               </div>
             </div>
