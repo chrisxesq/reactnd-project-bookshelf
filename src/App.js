@@ -40,7 +40,7 @@ class BooksApp extends React.Component {
     }
     
   render() {
-    console.log('booksapp, this.state.books',this.state.books)
+    console.log('booksapp, this.state.books',this.state)
     
     return (
       <div className="app">
