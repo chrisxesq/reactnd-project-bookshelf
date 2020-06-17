@@ -1,12 +1,14 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
+import { Link } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import './App.css'
 import BookList from './BookList'
 import SearchPage from './SearchPage'
 
 class BooksApp extends React.Component {
   state = {
-    showSearchPage: false
+    books:[]
   }
 
     filterBookList=(shelf)=>{
@@ -29,26 +31,45 @@ class BooksApp extends React.Component {
       
     }
 
-    updateToFalseShowSearchPage =(e)=>{
-      e.preventDefault();
-      this.setState((ptrvState)=>({
-        showSearchPage: false
-      }))
+    componentDidMount(){
+      BooksAPI.getAll().then(books=>{
+        this.setState((prevState)=>({
+          books
+        }))
+      })
     }
-
-  componentDidMount(){
-    BooksAPI.getAll().then(books=>{
-      this.setState((prevState)=>({
-        books
-      }))
-    })
-  }
+    
   render() {
     console.log('booksapp, this.state.books',this.state.books)
     
     return (
       <div className="app">
-        {this.state.showSearchPage 
+
+        <Route path='/search' render={()=>(
+          <SearchPage />
+        )} />
+
+        <Route exact path='/' render={()=>(
+          <div className="list-books">
+          <div className="list-books-title">
+            <h1>MyReads</h1>
+          </div>
+          <div className="list-books-content">
+            <div>
+              <BookList books={this.filterBookList('currentlyReading')} shelf={'Currently Reading'} updateBookShelf={this.updateBookShelf} />
+              <BookList books={this.filterBookList('wantToRead')} shelf={'Want to Read'} updateBookShelf={this.updateBookShelf} />
+              <BookList books={this.filterBookList('read')} shelf={'Read'} updateBookShelf={this.updateBookShelf} />
+            
+            </div>
+          </div>
+          <div className="open-search">
+            <Link to='/search'>Add a book</Link>
+          </div>
+        </div>
+
+        )} />
+
+        {/* {this.state.showSearchPage 
         ? (
           <SearchPage 
           showsearchpage={this.updateToFalseShowSearchPage}
@@ -68,10 +89,10 @@ class BooksApp extends React.Component {
               </div>
             </div>
             <div className="open-search">
-              <a href='#search' onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+              <Link to='/search'>Add a book</Link>
             </div>
           </div>
-        )}
+        )} */}
       </div>
     )
   }
