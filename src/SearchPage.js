@@ -28,6 +28,7 @@ class SearchPage extends React.Component {
   
   render(){
       console.log('searchpage state: ',this.state)
+      console.log('searchprops',this.props)
       return(
         <div className="search-books">
         <div className="search-books-bar">
@@ -53,7 +54,6 @@ class SearchPage extends React.Component {
         <h2 className="bookshelf-title">Search Result</h2>
          <div className="bookshelf">
          <ol className="books-grid">
-          test here!
          {this.state.search && this.state.error===undefined
          && 
          this.state.search.map(x=>(  
@@ -66,7 +66,7 @@ class SearchPage extends React.Component {
                 backgroundColor: 'gray' }}></div>
             }
                   
-                  <BookStateSelection book={x}  />
+                  <BookStateSelection book={x} currentbooks={this.props.currentbooks} />
             </div>
              <div className="book-title">{x['title']}</div>
              {x['authors'] && <div className="book-authors">{x['authors'].join(', ')}</div>} 

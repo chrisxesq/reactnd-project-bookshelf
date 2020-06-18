@@ -1,5 +1,5 @@
 import React from 'react'
-
+import * as BooksAPI from './BooksAPI'
 
 class BookStateSelection extends React.Component {
 
@@ -9,7 +9,21 @@ dothis =(e) => {
     const book = this.props.book;
     //console.log('book title: ',book['title'])
     //console.log('new shelf: ',newShelf)
-    if (newShelf !=='none' && newShelf !==book['shelf']){
+
+   if(!book['shelf']){
+    book['shelf']=newShelf;
+    console.log(book)
+
+
+    BooksAPI.update(book, book['shelf']).then(book=>{
+        console.log('api',book)
+    })
+
+
+
+
+
+   } else if (newShelf !=='none' && newShelf !==book['shelf']){
     book['shelf']=newShelf;
     //console.log('updatebook: ',book)
     this.props.updateBookShelf(book)
@@ -18,8 +32,10 @@ dothis =(e) => {
     }
   } 
 
+  
+
   render(){
-    //console.log('bookselect',this.props)
+    console.log('bookselect',this.props)
       return(
         <div>
         <div className="book-shelf-changer">
