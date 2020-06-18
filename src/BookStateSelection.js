@@ -19,6 +19,8 @@ dothis =(e) => {
         console.log('api',book)
     })
 
+    this.props.updateAll();
+
 
 
 
@@ -32,7 +34,7 @@ dothis =(e) => {
     }
   } 
 
-  
+
 
   render(){
     console.log('bookselect',this.props)

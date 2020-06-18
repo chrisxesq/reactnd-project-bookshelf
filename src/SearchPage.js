@@ -10,13 +10,14 @@ class SearchPage extends React.Component {
     search:[]
   }
   updateState=(e)=>{
+    console.log(e.target.value)
     e.preventDefault();
     const searchTerms = e.target.value;
     this.setState((prevState)=>({
         searchTerm: searchTerms
     }))
 
-    BooksAPI.search(this.state.searchTerm).then(search=>{
+    BooksAPI.search(searchTerms).then(search=>{
         this.setState({
           search
         })
@@ -41,7 +42,7 @@ class SearchPage extends React.Component {
           <div className="search-books-input-wrapper">
            <form 
            onChange={this.updateState}
-           value={this.state}
+           value={this.state.searchTerm}
            >
 
              <input type="text" placeholder="Search by title or author"/>
@@ -54,7 +55,15 @@ class SearchPage extends React.Component {
         <h2 className="bookshelf-title">Search Result</h2>
          <div className="bookshelf">
          <ol className="books-grid">
-         {this.state.search && this.state.error===undefined
+
+
+
+
+
+
+
+          
+         {!this.state.search.error
          && 
          this.state.search.map(x=>(  
             <li className ="book" key={x['id']}>
@@ -66,12 +75,14 @@ class SearchPage extends React.Component {
                 backgroundColor: 'gray' }}></div>
             }
                   
-                  <BookStateSelection book={x} currentbooks={this.props.currentbooks} />
+                  <BookStateSelection book={x} 
+                  currentbooks={this.props.currentbooks} 
+                  updateAll={this.props.updateAll} />
             </div>
              <div className="book-title">{x['title']}</div>
              {x['authors'] && <div className="book-authors">{x['authors'].join(', ')}</div>} 
             </li>    
-        ))}
+        ))} 
          </ol> 
         </div>
         </div>

@@ -38,6 +38,14 @@ class BooksApp extends React.Component {
         }))
       })
     }
+
+    updateAll(){
+      BooksAPI.getAll().then(books=>{
+        this.setState((prevState)=>({
+          books
+        }))
+      })
+    }
     
   render() {
     console.log('booksapp, this.state.books',this.state)
@@ -46,7 +54,7 @@ class BooksApp extends React.Component {
       <div className="app">
 
         <Route path='/search' render={()=>(
-          <SearchPage currentbooks={this.state.books} />
+          <SearchPage currentbooks={this.state.books} updateAll={this.updateAll} />
         )} />
 
         <Route exact path='/' render={()=>(

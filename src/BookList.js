@@ -17,11 +17,18 @@ class BookList extends React.Component {
         {this.props.books.map(x=>(  
             <li className ="book" key={x['id']}>
             <div className="book-top">
-              <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${x['imageLinks']['smallThumbnail']})` }}></div>
+
+            {x['imageLinks'] 
+             ? <div className="book-cover" style={{ width: 128, height: 193, 
+                backgroundImage: `url(${x['imageLinks']['smallThumbnail']})` }}></div>
+             :<div className="book-cover" style={{ width: 128, height: 193, 
+                backgroundColor: 'gray' }}></div>
+            }
+
                 <BookStateSelection book={x} updateBookShelf={this.props.updateBookShelf} /> 
             </div>
              <div className="book-title">{x['title']}</div>
-             <div className="book-authors">{x['authors'].join(', ')}</div>
+             {x['authors'] && <div className="book-authors">{x['authors'].join(', ')}</div>} 
             </li>    
         ))}
         </ol> 
