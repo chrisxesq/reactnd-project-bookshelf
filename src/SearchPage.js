@@ -7,31 +7,32 @@ import BookStateSelection from './BookStateSelection'
 class SearchPage extends React.Component {
   state = {
     searchTerm:'',
-    search:[]
+    search:[],
+    refresh:[]
   }
   updateState=(e)=>{
-    console.log(e.target.value)
     e.preventDefault();
     const searchTerms = e.target.value;
-    if(searchTerms.length>0){
-    this.setState((prevState)=>({
-        searchTerm: searchTerms
-    }))
 
-    BooksAPI.search(searchTerms).then(search=>{
+    if(searchTerms.length>0){
+      this.setState((prevState)=>({
+        searchTerm: searchTerms
+      }))
+
+      BooksAPI.search(searchTerms).then(search=>{
         this.setState({
           search
-        })
-      })
-    }
-    
+        }) 
+    })} else if (searchTerms===''){
+        this.setState((prevState)=>({
+          searchTerm: searchTerms,
+          search:[]
+        }))
+      }
+
   }
 
-    
-  
   render(){
-      console.log('searchpage state: ',this.state)
-      console.log('searchprops',this.props)
       return(
         <div className="search-books">
         <div className="search-books-bar">
@@ -57,14 +58,6 @@ class SearchPage extends React.Component {
         <h2 className="bookshelf-title">Search Result</h2>
          <div className="bookshelf">
          <ol className="books-grid">
-
-
-
-
-
-
-
-          
          {!this.state.search.error 
          && 
          this.state.search.map(x=>(  
@@ -87,12 +80,7 @@ class SearchPage extends React.Component {
         ))} 
          </ol> 
         </div>
-        </div>
-    
-
-
-
-          
+        </div>          
         </div>
       </div>
           

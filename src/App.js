@@ -13,21 +13,20 @@ class BooksApp extends React.Component {
 
     filterBookList=(shelf)=>{
       let res=[];
-       if(this.state.books!=null){
-         res = this.state.books.filter(x=>(x['shelf']===shelf))}
-      return res;
-       
+      if(this.state.books!=null){
+        res = this.state.books.filter(x=>(x['shelf']===shelf))}
+      return res;   
     }
 
     updateBookShelf=(book)=>{
-      console.log('thisstate',this.state.books)
       const i = this.state.books.findIndex(bk=>(bk['title']===book['title']));
       const updateBooks = this.state.books;
-      console.log('updatebooks',updateBooks)
+      BooksAPI.update(book,book['shelf'])
       updateBooks[i]=book;
       this.setState((prevState)=>({
         books: updateBooks
       }))
+      console.log('title',this.state.books)
       
     }
 
@@ -39,17 +38,19 @@ class BooksApp extends React.Component {
       })
     }
 
-    updateAll(){
-      BooksAPI.getAll().then(books=>{
+    updateAll=(bookID)=>{
+      console.log('Im update all')
+      console.log('updateAll, thisstate,  ',this.state)
+
+
+      BooksAPI.get(bookID).then(book=>{
         this.setState((prevState)=>({
-          books
+          books: [...prevState.books, book]
         }))
       })
     }
     
   render() {
-    console.log('booksapp, this.state.books',this.state)
-    
     return (
       <div className="app">
 
@@ -76,31 +77,6 @@ class BooksApp extends React.Component {
         </div>
 
         )} />
-
-        {/* {this.state.showSearchPage 
-        ? (
-          <SearchPage 
-          showsearchpage={this.updateToFalseShowSearchPage}
-          />
-        ) 
-        : (
-          <div className="list-books">
-            <div className="list-books-title">
-              <h1>MyReads</h1>
-            </div>
-            <div className="list-books-content">
-              <div>
-                <BookList books={this.filterBookList('currentlyReading')} shelf={'Currently Reading'} updateBookShelf={this.updateBookShelf} />
-                <BookList books={this.filterBookList('wantToRead')} shelf={'Want to Read'} updateBookShelf={this.updateBookShelf} />
-                <BookList books={this.filterBookList('read')} shelf={'Read'} updateBookShelf={this.updateBookShelf} />
-              
-              </div>
-            </div>
-            <div className="open-search">
-              <Link to='/search'>Add a book</Link>
-            </div>
-          </div>
-        )} */}
       </div>
     )
   }
