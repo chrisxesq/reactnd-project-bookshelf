@@ -13,6 +13,7 @@ class SearchPage extends React.Component {
     console.log(e.target.value)
     e.preventDefault();
     const searchTerms = e.target.value;
+    if(searchTerms.length>0){
     this.setState((prevState)=>({
         searchTerm: searchTerms
     }))
@@ -22,7 +23,8 @@ class SearchPage extends React.Component {
           search
         })
       })
-
+    }
+    
   }
 
     
@@ -63,7 +65,7 @@ class SearchPage extends React.Component {
 
 
           
-         {!this.state.search.error
+         {!this.state.search.error 
          && 
          this.state.search.map(x=>(  
             <li className ="book" key={x['id']}>
