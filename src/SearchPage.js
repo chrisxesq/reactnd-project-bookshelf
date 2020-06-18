@@ -1,10 +1,13 @@
 import React from 'react'
+import './App.css'
 import * as BooksAPI from './BooksAPI'
 import {Link} from 'react-router-dom'
+import BookStateSelection from './BookStateSelection'
 
 class SearchPage extends React.Component {
   state = {
-    searchTerm:''
+    searchTerm:'',
+    search:[]
   }
   updateState=(e)=>{
     e.preventDefault();
@@ -14,10 +17,10 @@ class SearchPage extends React.Component {
     }))
 
     BooksAPI.search(searchTerms).then(search=>{
-      this.setState((prevState)=>({
-        search
-      }))
-    })
+        this.setState((prevState)=>({
+          search
+        }))
+      })
   }
 
   
@@ -48,6 +51,25 @@ class SearchPage extends React.Component {
         </div>
         <div className="search-books-results">
 
+
+        <div className="bookshelf">
+        <h2 className="bookshelf-title">Search Result</h2>
+         <div className="bookshelf">
+         <ol className="books-grid">
+          
+         {/* {!this.state.search.error 
+         && 
+        
+         this.state.search.map(x=><li>{x}</li>)
+
+
+         }  */}
+         
+
+
+         </ol> 
+        </div>
+        </div>
         
 
           <ol className="books-grid"></ol>
