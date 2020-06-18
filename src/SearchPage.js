@@ -16,14 +16,15 @@ class SearchPage extends React.Component {
         searchTerm: searchTerms
     }))
 
-    BooksAPI.search(searchTerms).then(search=>{
-        this.setState((prevState)=>({
+    BooksAPI.search(this.state.searchTerm).then(search=>{
+        this.setState({
           search
-        }))
+        })
       })
+
   }
 
-  
+    
   
   render(){
       console.log('searchpage state: ',this.state)
@@ -43,36 +44,36 @@ class SearchPage extends React.Component {
            >
 
              <input type="text" placeholder="Search by title or author"/>
-           </form>
-
-           
+           </form>       
            
           </div>
         </div>
         <div className="search-books-results">
-
-
         <div className="bookshelf">
         <h2 className="bookshelf-title">Search Result</h2>
          <div className="bookshelf">
          <ol className="books-grid">
-          
-         {/* {!this.state.search.error 
+          test here!
+         {this.state.search & this.state.error===undefined
          && 
-        
-         this.state.search.map(x=><li>{x}</li>)
-
-
-         }  */}
-         
-
-
+         this.state.search.map(x=>(  
+            <li className ="book" key={x['id']}>
+            <div className="book-top">
+              <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${x['imageLinks']['smallThumbnail']})` }}></div>
+                <BookStateSelection book={x}  /> 
+            </div>
+             <div className="book-title">{x['title']}</div>
+             <div className="book-authors">{x['authors'].join(', ')}</div>
+            </li>    
+        ))}
          </ol> 
         </div>
         </div>
-        
+    
 
-          <ol className="books-grid"></ol>
+
+
+          
         </div>
       </div>
           
