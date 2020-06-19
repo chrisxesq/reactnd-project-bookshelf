@@ -32,7 +32,19 @@ class SearchPage extends React.Component {
 
   }
 
+    getShelfInfo =(x)=>{
+      const bk = this.props.currentbooks
+      const bklist = [...bk.currentlyReading,...bk.wantToRead,...bk.read]
+      const idx = bklist.findIndex(y=>(x.id===y.id))
+      let optionV='none';
+      if (idx !== -1) {
+       optionV = (bklist[idx].shelf)
+      }  
+      return optionV
+    }
+
   render(){
+  
       return(
         <div className="search-books">
         <div className="search-books-bar">
@@ -69,10 +81,11 @@ class SearchPage extends React.Component {
              :<div className="book-cover" style={{ width: 128, height: 193, 
                 backgroundColor: 'gray' }}></div>
             }
-                  
-                  <BookStateSelection book={x} 
+
+                  <BookStateSelection book={x} optionV={this.getShelfInfo(x)}
                   currentbooks={this.props.currentbooks} 
-                  updateAll={this.props.updateAll} />
+                  updateAll={this.props.updateAll} 
+                  updateBookShelf={this.props.updateBookShelf} />
             </div>
              <div className="book-title">{x['title']}</div>
              {x['authors'] && <div className="book-authors">{x['authors'].join(', ')}</div>} 
