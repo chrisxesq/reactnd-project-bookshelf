@@ -8,7 +8,9 @@ import SearchPage from './SearchPage'
 
 class BooksApp extends React.Component {
   state = {
-    books:[]
+    currentlyReading: [],
+    wantToRead: [],
+    read: []
   }
 
     filterBookList=(shelf)=>{
@@ -19,35 +21,35 @@ class BooksApp extends React.Component {
     }
 
     updateBookShelf=(book)=>{
-      const i = this.state.books.findIndex(bk=>(bk['title']===book['title']));
-      const updateBooks = this.state.books;
-      BooksAPI.update(book,book['shelf'])
-      updateBooks[i]=book;
-      this.setState((prevState)=>({
-        books: updateBooks
-      }))
-      console.log('title',this.state.books)
       
+      BooksAPI.update(book,book['shelf'])
+      
+      this.setState((prev)=>({
+        currentlyReading: prev.currentlyReading.filter(x=>x.id!==book.id),
+        wantToRead: prev.wantToRead.filter(x=>x.id!==book.id),
+        read: prev.read.filter(x=>x.id!==book.id)
+      }))
+
+      book['shelf']==='currentlyReading'
+      ? this.setState(p=>({currentlyReading:[...p.currentlyReading, book]}))
+      : book['shelf']==='wantToRead'
+        ? this.setState(p=>({wantToRead:[...p.wantToRead, book]}))
+        : this.setState(p=>({read:[...p.read, book]}))
+          
     }
 
-    componentDidMount(){
+    componentDidMount(){       
+      this.updateAll();
+    }
+
+    updateAll=()=>{
       BooksAPI.getAll().then(books=>{
-        this.setState((prevState)=>({
-          books
-        }))
-      })
-    }
-
-    updateAll=(bookID)=>{
-      console.log('Im update all')
-      console.log('updateAll, thisstate,  ',this.state)
-
-
-      BooksAPI.get(bookID).then(book=>{
-        this.setState((prevState)=>({
-          books: [...prevState.books, book]
-        }))
-      })
+        this.setState({
+          currentlyReading: books.filter(x=>x.shelf==='currentlyReading'),
+          wantToRead: books.filter(x=>x.shelf==='wantToRead'),
+          read: books.filter(x=>x.shelf==='read')
+        })
+      })  
     }
     
   render() {
@@ -55,7 +57,7 @@ class BooksApp extends React.Component {
       <div className="app">
 
         <Route path='/search' render={()=>(
-          <SearchPage currentbooks={this.state.books} updateAll={this.updateAll} />
+          <SearchPage currentbooks={this.state} updateAll={this.updateAll} />
         )} />
 
         <Route exact path='/' render={()=>(
@@ -65,9 +67,9 @@ class BooksApp extends React.Component {
           </div>
           <div className="list-books-content">
             <div>
-              <BookList books={this.filterBookList('currentlyReading')} shelf={'Currently Reading'} updateBookShelf={this.updateBookShelf} />
-              <BookList books={this.filterBookList('wantToRead')} shelf={'Want to Read'} updateBookShelf={this.updateBookShelf} />
-              <BookList books={this.filterBookList('read')} shelf={'Read'} updateBookShelf={this.updateBookShelf} />
+              <BookList books={this.state.currentlyReading} shelf={'Currently Reading'} updateBookShelf={this.updateBookShelf} />
+              <BookList books={this.state.wantToRead} shelf={'Want to Read'} updateBookShelf={this.updateBookShelf} />
+              <BookList books={this.state.read} shelf={'Read'} updateBookShelf={this.updateBookShelf} />
             
             </div>
           </div>
