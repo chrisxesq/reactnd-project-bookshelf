@@ -12,7 +12,7 @@ class SearchPage extends React.Component {
   }
   updateState=(e)=>{
     e.preventDefault();
-    const searchTerms = e.target.value;
+    const searchTerms = e.target.value.trim();
 
     if(searchTerms.length>0){
       this.setState((prevState)=>({

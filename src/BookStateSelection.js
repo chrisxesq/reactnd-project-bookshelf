@@ -16,7 +16,7 @@ dothis =(e) => {
    } else if (newShelf !==book['shelf'] && newShelf !=='none'){
       book['shelf'] = newShelf;   
 
-       try{ this.props.updateBookShelf(book)} catch(err){console.error('wwe',err)}
+      this.props.updateBookShelf(book)
 
     } else {
         console.log('no changes')
