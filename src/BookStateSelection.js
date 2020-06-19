@@ -15,23 +15,26 @@ dothis =(e) => {
      this.props.updateAll();
    } else if (newShelf !==book['shelf'] && newShelf !=='none'){
       book['shelf'] = newShelf;   
-      this.props.updateBookShelf(book)
+
+       try{ this.props.updateBookShelf(book)} catch(err){console.error('wwe',err)}
+
     } else {
         console.log('no changes')
     }  
   } 
 
-
-
   render(){
-    //console.log(this.props.book.shelf)
-    //console.log(this.props.currentbooks)
-    //console.log(this.props.book)
       return(
         <div>
         <div className="book-shelf-changer">
           <select 
-          value={this.props.book.shelf===undefined?'none':this.props.book.shelf} onChange = {this.dothis}>
+          value={
+            !!this.props.book.shelf
+            ? this.props.book.shelf
+            : !!this.props.optionV
+             ? this.props.optionV
+             :'none'
+            } onChange = {this.dothis}>
             <option value="move" disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>
             <option value="wantToRead">Want to Read</option>
