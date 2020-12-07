@@ -18,13 +18,18 @@ dothis =(e) => {
 
       this.props.updateBookShelf(book)
 
+    } else if (newShelf !==book['shelf'] && newShelf ==='none'){
+      book['shelf'] = '';   
+
+      this.props.updateBookShelf(book);
+      
     } else {
         console.log('no changes')
     }  
   } 
 
   render(){
-
+    console.log('bookstateselection',this.props)
       return(
         <div>
         <div className="book-shelf-changer">

@@ -4,7 +4,7 @@ import BookStateSelection from './BookStateSelection'
 class BookList extends React.Component {
 
   render(){
-    //console.log('booklistprops',this.props)
+    console.log('booklistprops',this.props)
       return(
         <div className="bookshelf">
         <h2 className="bookshelf-title">{this.props.shelf}</h2>

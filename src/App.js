@@ -29,12 +29,16 @@ class BooksApp extends React.Component {
         wantToRead: prev.wantToRead.filter(x=>x.id!==book.id),
         read: prev.read.filter(x=>x.id!==book.id)
       }))
-
+      console.log('b4 adding back')
+      console.log(this.state)
       book['shelf']==='currentlyReading'
       ? this.setState(p=>({currentlyReading:[...p.currentlyReading, book]}))
       : book['shelf']==='wantToRead'
         ? this.setState(p=>({wantToRead:[...p.wantToRead, book]}))
-        : this.setState(p=>({read:[...p.read, book]}))
+        : book['shelf']==='read'
+          ?this.setState(p=>({read:[...p.read, book]}))
+          :console.log('none')
+        
           
     }
 
@@ -60,7 +64,7 @@ class BooksApp extends React.Component {
           <SearchPage currentbooks={this.state} updateAll={this.updateAll} updateBookShelf={this.updateBookShelf} />
         )} />
 
-        <Route exact path='/' render={()=>(
+        <Route exact path='/' render={()=>(    
           <div className="list-books">
           <div className="list-books-title">
             <h1>MyReads</h1>

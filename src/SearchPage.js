@@ -44,7 +44,8 @@ class SearchPage extends React.Component {
     }
 
   render(){
-  
+    console.log('searchPage')
+    console.log(this.state)
       return(
         <div className="search-books">
         <div className="search-books-bar">
