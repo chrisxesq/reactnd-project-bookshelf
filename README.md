@@ -7,5 +7,8 @@ a simple cataloging app that allows you to place books in one of three shelves o
 
 It also allow you to search for books based on title and author.
 
+##  Preview the app here:
+https://keen-villani-eeb74e.netlify.app/
+
 
 
